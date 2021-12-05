@@ -14,7 +14,7 @@ class CommandBlock
 
 	void displayPrint(const std::string& out)
 	{
-		std::cout << out << std::endl;
+		std::cout << out;
 	}
 
 	void filePrint(const std::string& out)
@@ -32,11 +32,10 @@ public:
 			time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 		cmdBlock.push_back(cmd);
 	}
-
-	void print()
+	std::string toString()
 	{
 		if (cmdBlock.empty())
-			return;
+			return std::string();
 		std::stringstream ss;
 		ss << "bulk:";
 		auto lastElement = --cmdBlock.end();
@@ -46,7 +45,12 @@ public:
 			ss << *it << ", ";
 		}
 		ss << *it << std::endl;
-		displayPrint(ss.str());
-		filePrint(ss.str());
+		return ss.str();
+	}
+	void print()
+	{
+		std::string blockStr = toString();
+		displayPrint(blockStr);
+		filePrint(blockStr);
 	}
 };

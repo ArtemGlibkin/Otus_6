@@ -63,25 +63,25 @@ class CommandReader
 		block.add(input);
 		return true;
 	}
+public:
+	CommandReader(int n) : blockSize(n) {};
 
-	void readBlock()
+	CommandBlock readBlock(std::istream& inputstream = std::cin)
 	{
 		CommandBlock cmdBlock;
 		std::string input;
 		int i = 0;
-		for (std::string input; (dynamicBlock || (i != blockSize)) && std::getline(std::cin, input); i++)
+		for (std::string input; (dynamicBlock || (i != blockSize)) && std::getline(inputstream, input); i++)
 		{
 			if (!inputHandler(input, cmdBlock))
 				break;
 		}
-		cmdBlock.print();
+		return cmdBlock;
 	}
 
-public:
-	CommandReader(int n) :blockSize(n) {};
 	void reader()
 	{
 		while (!exitFlag)
-			readBlock();
+			readBlock().print();
 	}
 };
